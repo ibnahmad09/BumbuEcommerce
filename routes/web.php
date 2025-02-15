@@ -14,6 +14,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\UserProductController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Admin\AdminOrderController;
+use App\Http\Controllers\Auth\GoogleController;
 
 
 /*
@@ -29,6 +30,10 @@ use App\Http\Controllers\Admin\AdminOrderController;
 Route::get('/', [GuestController::class, 'index'])->name('guest.index');
 
 Auth::routes();
+
+
+Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
@@ -50,7 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show']);
     Route::resource('reviews', ReviewController::class)->only(['store', 'update']);
     Route::get('/products', [UserProductController::class, 'index'])->name('user.products.index');
-    
+    Route::post('/chatbot', [ChatbotController::class, 'handleMessage'])->name('chatbot');
+
     Route::prefix('checkout')->group(function() {
         Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
         Route::post('/process', [CheckoutController::class, 'process'])->name('checkout.process');
