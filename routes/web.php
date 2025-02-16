@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\Admin\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,7 +42,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('/products', ProductController::class)->except('show');
     Route::resource('/order', AdminOrderController::class)->except(['create', 'store', 'edit']);
     Route::post('/order/{order}/update-status', [AdminOrderController::class, 'updateStatus'])->name('order.updateStatus');
-    Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::resource('/users', UserController::class)->except('show');
 });
 
 

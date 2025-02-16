@@ -114,7 +114,7 @@
                     </svg>
                     Pesanan
                 </a>
-                <a href="{{ route('admin.users') }}" class="flex items-center px-6 py-3 text-gray-600 hover:bg-white/30 hover:text-gray-900 transition-all duration-300">
+                <a href="{{ route('users.index') }}" class="flex items-center px-6 py-3 text-gray-600 hover:bg-white/30 hover:text-gray-900 transition-all duration-300">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                     </svg>
@@ -135,9 +135,9 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                             </svg>
                         </button>
-                        
+
                         <h2 class="text-lg font-semibold text-gray-800">@yield('title')</h2>
-                        
+
                         <div class="flex items-center space-x-6">
                             <!-- User Dropdown -->
                             <div class="relative" x-data="{ open: false }">
@@ -149,7 +149,7 @@
                                     </svg>
                                 </button>
                                 <!-- Dropdown Menu -->
-                                <div x-show="open" @click.away="open = false" 
+                                <div x-show="open" @click.away="open = false"
                                      class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 transition-all duration-300"
                                      x-transition:enter="transition ease-out duration-100"
                                      x-transition:enter-start="transform opacity-0 scale-95"
@@ -167,7 +167,7 @@
                     </div>
                 </div>
             </nav>
-            
+
 
             <!-- Content -->
             <main class="p-6">
@@ -180,7 +180,7 @@
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebar-overlay');
-        
+
         sidebar.classList.toggle('-translate-x-full');
         overlay.classList.toggle('opacity-0');
         overlay.classList.toggle('pointer-events-none');
@@ -189,7 +189,7 @@
     function closeSidebar() {
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebar-overlay');
-        
+
         sidebar.classList.add('-translate-x-full');
         overlay.classList.add('opacity-0');
         overlay.classList.add('pointer-events-none');
@@ -203,7 +203,7 @@
         const sidebar = document.getElementById('sidebar');
         const mobileButton = document.getElementById('mobile-menu-button');
         const overlay = document.getElementById('sidebar-overlay');
-        
+
         if (!sidebar.contains(event.target) && !mobileButton.contains(event.target)) {
             if (window.innerWidth < 1024) {
                 closeSidebar();
@@ -212,4 +212,4 @@
     });
     </script>
 </body>
-</html> 
+</html>
