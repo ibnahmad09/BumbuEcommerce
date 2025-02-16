@@ -30,42 +30,43 @@
         </div>
 
         <!-- Product Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            @foreach($products as $product)
-            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                <div class="relative">
-                    <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-56 object-cover">
-                    @if($product->stock <= 0)
-                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                            <span class="text-white font-bold">Stok Habis</span>
-                        </div>
-                    @endif
+      <!-- Product Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    @foreach($products as $product)
+    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+        <div class="relative">
+            <<img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-32 sm:h-56 object-cover">
+            @if($product->stock <= 0)
+                <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <span class="text-white font-bold">Stok Habis</span>
                 </div>
-                <div class="p-4">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ $product->name }}</h3>
-                    <p class="text-green-600 font-bold mb-4">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                    
-                    @if($product->stock > 0)
-                    <form action="{{ route('cart.store') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <div class="flex items-center gap-4 mb-4">
-                            <input type="number" name="quantity" value="1" min="1" max="{{ $product->stock }}" 
-                                   class="w-20 px-2 py-1 border rounded-lg text-center">
-                        </div>
-                        <button type="submit" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
-                            Tambah ke Keranjang
-                        </button>
-                    </form>
-                    @else
-                        <button class="w-full bg-gray-400 text-white px-4 py-2 rounded-lg cursor-not-allowed" disabled>
-                            Stok Habis
-                        </button>
-                    @endif
-                </div>
-            </div>
-            @endforeach
+            @endif
         </div>
+        <div class="p-3 sm:p-4">
+            <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-1 sm:mb-2">{{ $product->name }}</h3>
+            <p class="text-green-600 font-bold mb-2 sm:mb-4">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+
+            @if($product->stock > 0)
+            <form action="{{ route('cart.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 mb-2 sm:mb-4">
+                    <input type="number" name="quantity" value="1" min="1" max="{{ $product->stock }}"
+                           class="w-full sm:w-20 px-2 py-1 border rounded-lg text-center">
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 text-sm sm:text-base">
+                    Tambah ke Keranjang
+                </button>
+            </form>
+            @else
+                <button class="w-full bg-gray-400 text-white px-4 py-2 rounded-lg cursor-not-allowed text-sm sm:text-base" disabled>
+                    Stok Habis
+                </button>
+            @endif
+        </div>
+    </div>
+    @endforeach
+</div>
 
         <!-- Pagination -->
         <div class="mt-8">
@@ -80,7 +81,7 @@
         forms.forEach(form => {
             form.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                
+
                 try {
                     const response = await fetch(form.action, {
                         method: 'POST',
@@ -95,7 +96,7 @@
                     });
 
                     const data = await response.json();
-                    
+
                     if (response.ok) {
                         // Show success notification
                         showNotification('Produk berhasil ditambahkan ke keranjang', data.total_price);
@@ -129,7 +130,7 @@
             `;
 
             document.body.appendChild(notification);
-            
+
             // Trigger animation
             setTimeout(() => {
                 notification.classList.remove('translate-x-full');
