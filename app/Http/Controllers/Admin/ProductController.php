@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Events\LowStockNotification;
 
 class ProductController extends Controller
 {
@@ -45,6 +46,9 @@ class ProductController extends Controller
         }
 
         $product->save();
+        if ($product->stock <= 5) { // Sesuaikan threshold stok
+            event(new LowStockNotification($product));
+        }
 
         return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan');
     }
@@ -79,6 +83,10 @@ class ProductController extends Controller
 
         $product->save();
 
+        if ($product->stock <= 5) { // Sesuaikan threshold stok
+            event(new LowStockNotification($product));
+        }
+
         return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui');
     }
 
@@ -87,4 +95,4 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus');
     }
-} 
+}

@@ -85,19 +85,20 @@
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                 <div class="text-center">
                                     <p class="text-sm text-gray-500">Total Pesanan</p>
-                                    <p class="text-2xl font-bold text-green-600">12</p>
+                                    <p class="text-2xl font-bold text-green-600">{{ $totalOrders }}</p>
                                 </div>
                                 <div class="text-center">
                                     <p class="text-sm text-gray-500">Pesanan Selesai</p>
-                                    <p class="text-2xl font-bold text-green-600">8</p>
+                                    <p class="text-2xl font-bold text-green-600">{{ $completedOrders }}</p>
                                 </div>
                                 <div class="text-center">
                                     <p class="text-sm text-gray-500">Pesanan Diproses</p>
-                                    <p class="text-2xl font-bold text-green-600">2</p>
+                                    <p class="text-2xl font-bold text-green-600">{{ $processingOrders }}</p>
                                 </div>
                                 <div class="text-center">
                                     <p class="text-sm text-gray-500">Total Belanja</p>
-                                    <p class="text-2xl font-bold text-green-600">Rp 1.250.000</p>
+                                    <p class="text-2xl font-bold text-green-600">Rp
+                                        {{ number_format($totalSpent, 0, ',', '.') }}</p>
                                 </div>
                             </div>
                         </div>
