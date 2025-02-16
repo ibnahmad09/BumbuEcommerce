@@ -19,12 +19,15 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
+
+        // Cukup gunakan $order yang sudah di-resolve oleh Laravel
         if ($order->user_id !== auth()->id()) {
             abort(403);
         }
 
-        return view('user.orders.show', [
-            'order' => $order->load(['items.product', 'user'])
-        ]);
+        // Load relasi yang diperlukan
+        $order->load(['shippingAddress', 'items.product', 'user']);
+
+        return view('user.orders.show', compact('order'));
     }
 }

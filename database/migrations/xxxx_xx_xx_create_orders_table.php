@@ -14,6 +14,7 @@ return new class extends Migration
             $table->decimal('total_price', 10, 2);
             $table->string('status')->default('pending');
             $table->string('payment_method')->default('cod');
+            $table->foreignId('shipping_address_id')->nullable();
             $table->string('midtrans_order_id')->nullable();
             $table->string('midtrans_snap_token')->nullable();
             $table->string('midtrans_transaction_status')->nullable();
@@ -25,4 +26,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('orders');
     }
-}; 
+};

@@ -72,6 +72,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/security', [ProfileController::class, 'security'])->name('profile.security');
         Route::put('/update-password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
     });
+
+    Route::prefix('profile')->group(function() {
+        Route::get('/address', [ProfileController::class, 'address'])->name('profile.address');
+        Route::post('/address', [ProfileController::class, 'storeAddress'])->name('profile.address.store');
+        Route::delete('/address/{id}', [ProfileController::class, 'deleteAddress'])->name('profile.address.delete');
+        Route::get('/address/{address}/edit', [ProfileController::class, 'editAddress'])->name('profile.address.edit');
+        Route::put('/address/{address}', [ProfileController::class, 'updateAddress'])->name('profile.address.update');
+    });
+
 });
 
 

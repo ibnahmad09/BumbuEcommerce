@@ -14,15 +14,18 @@ use Midtrans\Snap;
 class CheckoutController extends Controller
 {
     public function index()
-    {
-        $carts = Cart::where('user_id', auth()->id())->with('product')->get();
-        return view('user.checkout.index', compact('carts'));
-    }
+{
+    $carts = Cart::where('user_id', auth()->id())->with('product')->get();
+    $addresses = auth()->user()->addresses;
+
+    return view('user.checkout.index', compact('carts', 'addresses'));
+}
 
     public function process(Request $request)
     {
         $request->validate([
-            'payment_method' => 'required|in:e_wallet,cod'
+            'payment_method' => 'required|in:e_wallet,cod',
+            'shipping_address' => 'required|exists:user_addresses,id,user_id,'.auth()->id()
         ]);
 
         $carts = Cart::where('user_id', auth()->id())->with('product')->get();
@@ -35,7 +38,8 @@ class CheckoutController extends Controller
             'user_id' => auth()->id(),
             'total_price' => $carts->sum(fn($item) => $item->product->price * $item->quantity),
             'status' => 'pending',
-            'payment_method' => $request->payment_method
+            'payment_method' => $request->payment_method,
+            'shipping_address_id' => $request->shipping_address
         ]);
 
         foreach ($carts as $cart) {
@@ -44,6 +48,7 @@ class CheckoutController extends Controller
                 'product_id' => $cart->product_id,
                 'quantity' => $cart->quantity,
                 'price' => $cart->product->price
+
             ]);
 
             // Update product stock
