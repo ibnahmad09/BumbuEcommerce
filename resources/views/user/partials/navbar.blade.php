@@ -23,6 +23,7 @@
                 <a href="{{route('reviews.index')}} " class="text-gray-600 hover:text-green-600">Kontak</a>
                 <div class="flex items-center">
                     @auth
+                        <a href="{{ route('profile.index') }}" class="text-gray-800 hover:text-green-600 px-3 py-2">Profil</a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="text-gray-800 hover:text-green-600 px-3 py-2">Logout</button>
@@ -46,6 +47,7 @@
             <a href=" {{route('reviews.index')}} " class="block text-gray-600 hover:text-green-600 px-3 py-2">Kontak</a>
             <div class="pt-4 border-t border-gray-200">
                 @auth
+                    <a href="{{ route('profile.index') }}" class="block text-gray-800 hover:text-green-600 px-3 py-2">Profil</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="block w-full text-left text-gray-800 hover:text-green-600 px-3 py-2">Logout</button>

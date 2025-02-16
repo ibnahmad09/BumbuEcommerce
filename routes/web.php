@@ -18,6 +18,7 @@ use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -62,6 +63,14 @@ Route::middleware('auth')->group(function () {
     Route::prefix('checkout')->group(function() {
         Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
         Route::post('/process', [CheckoutController::class, 'process'])->name('checkout.process');
+    });
+
+    Route::prefix('profile')->group(function() {
+        Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/security', [ProfileController::class, 'security'])->name('profile.security');
+        Route::put('/update-password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
     });
 });
 
