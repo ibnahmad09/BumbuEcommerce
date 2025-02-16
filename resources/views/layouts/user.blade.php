@@ -21,7 +21,35 @@
             transform: translateX(100%);
             transition: transform 300ms ease-in;
         }
-        
+        .quick-btn {
+            @apply bg-green-100 text-green-800 px-3 py-1 rounded-lg text-sm hover:bg-green-200 transition-colors;
+        }
+
+        @media (max-width: 640px) {
+            #chatbot-container {
+                bottom: 1rem;
+                right: 1rem;
+            }
+            #chat-window {
+                width: 90vw;
+                height: 60vh;
+                max-height: 400px;
+            }
+        }
+
+         .sticky {
+        position: -webkit-sticky;
+        position: sticky;
+    }
+
+    .animate-spin {
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -31,17 +59,23 @@
                 <div class="flex items-center">
                     <a href="/" class="text-2xl font-bold text-green-600">BumbuMasak</a>
                 </div>
-                <div class="flex items-center space-x-6">
+
+                <!-- Hamburger Menu for Mobile -->
+                <div class="flex items-center lg:hidden">
+                    <button id="mobile-menu-button" class="p-2 text-gray-600 hover:text-green-600 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center space-x-6">
                     <a href="{{ route('user.products.index') }}" class="text-gray-600 hover:text-green-600">Produk</a>
                     <a href="{{ route('cart.index') }}" class="text-gray-600 hover:text-green-600">Keranjang</a>
                     <a href="{{ route('orders.index') }}" class="text-gray-600 hover:text-green-600">Pesanan</a>
                     <a href="#" class="text-gray-600 hover:text-green-600">Tentang Kami</a>
                     <a href="#" class="text-gray-600 hover:text-green-600">Kontak</a>
-                    <button id="chatbot-toggle" class="p-2 rounded-full bg-green-100 hover:bg-green-200">
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                        </svg>
-                    </button>
                     <div class="flex items-center">
                         @auth
                             <form method="POST" action="{{ route('logout') }}">
@@ -56,28 +90,48 @@
                 </div>
             </div>
         </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="{{ route('user.products.index') }}" class="block text-gray-600 hover:text-green-600 px-3 py-2">Produk</a>
+                <a href="{{ route('cart.index') }}" class="block text-gray-600 hover:text-green-600 px-3 py-2">Keranjang</a>
+                <a href="{{ route('orders.index') }}" class="block text-gray-600 hover:text-green-600 px-3 py-2">Pesanan</a>
+                <a href="#" class="block text-gray-600 hover:text-green-600 px-3 py-2">Tentang Kami</a>
+                <a href="#" class="block text-gray-600 hover:text-green-600 px-3 py-2">Kontak</a>
+                <div class="pt-4 border-t border-gray-200">
+                    @auth
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="block w-full text-left text-gray-800 hover:text-green-600 px-3 py-2">Logout</button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}" class="block text-gray-800 hover:text-green-600 px-3 py-2">Login</a>
+                        <a href="{{ route('register') }}" class="block text-gray-800 hover:text-green-600 px-3 py-2">Register</a>
+                    @endauth
+                </div>
+            </div>
+        </div>
     </nav>
-    
+    <script>
+        // Toggle mobile menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    </script>
     <main>
         @yield('content')
     </main>
-
-    @include('user.partials.chatbot')
-    
-    <script>
-        // Chatbot Toggle
-        const chatbotToggle = document.getElementById('chatbot-toggle');
-        const chatbotContainer = document.getElementById('chatbot-container');
-        const chatbotClose = document.getElementById('chatbot-close');
-
-        chatbotToggle.addEventListener('click', () => {
-            chatbotContainer.classList.toggle('hidden');
-        });
-
-        chatbotClose.addEventListener('click', () => {
-            chatbotContainer.classList.add('hidden');
-        });
-    </script>
 
     <footer class="bg-white border-t border-gray-200 mt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -116,6 +170,6 @@
             </div>
         </div>
     </footer>
-@stack('script')
+    @include('user.partials.chatbot')
 </body>
-</html> 
+</html>

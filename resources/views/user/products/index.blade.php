@@ -35,7 +35,7 @@
     @foreach($products as $product)
     <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
         <div class="relative">
-            <<img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-32 sm:h-56 object-cover">
+            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-40 sm:h-56 object-cover">
             @if($product->stock <= 0)
                 <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <span class="text-white font-bold">Stok Habis</span>
