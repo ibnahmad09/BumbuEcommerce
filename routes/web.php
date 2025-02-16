@@ -16,6 +16,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\AboutController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,9 +53,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('cart', CartController::class)->only(['index', 'store', 'destroy', 'update']);
     Route::resource('orders', OrderController::class)->only(['index', 'show']);
-    Route::resource('reviews', ReviewController::class)->only(['store', 'update']);
+    Route::resource('reviews', ReviewController::class)->only(['store', 'update','index']);
     Route::get('/products', [UserProductController::class, 'index'])->name('user.products.index');
     Route::post('/chatbot', [ChatbotController::class, 'handle'])->name('chatbot.handle');
+    Route::get('/about', [AboutController::class, 'index'])->name('about');
 
     Route::prefix('checkout')->group(function() {
         Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');

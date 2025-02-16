@@ -8,6 +8,17 @@ use App\Models\Order;
 
 class ReviewController extends Controller
 {
+    public function index()
+    {
+        // Ambil review yang dibuat oleh user yang sedang login
+        $reviews = Review::with(['product', 'order'])
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->paginate(10);
+
+        return view('user.contact.index', compact('reviews'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
