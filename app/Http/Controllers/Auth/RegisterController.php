@@ -63,11 +63,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        \Log::info('Registration data:', $data);
+        // Pastikan semua data yang diperlukan ada
+        if (!isset($data['name']) || !isset($data['email']) || !isset($data['password'])) {
+            throw new \InvalidArgumentException('Required registration data is missing');
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role' => 'user', // Default role
+            'email_verified_at' => null,
         ]);
     }
 }

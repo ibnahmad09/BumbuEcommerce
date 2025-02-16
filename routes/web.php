@@ -31,7 +31,7 @@ use App\Http\Controllers\ProfileController;
 
 Route::get('/', [GuestController::class, 'index'])->name('guest.index');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
@@ -51,7 +51,7 @@ Route::post('/pay', [PaymentController::class, 'pay'])->name('pay');
 
 Route::post('/midtrans/notification', [PaymentController::class, 'handleNotification']);
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('cart', CartController::class)->only(['index', 'store', 'destroy', 'update']);
     Route::resource('orders', OrderController::class)->only(['index', 'show']);
