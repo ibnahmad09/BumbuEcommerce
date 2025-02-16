@@ -13,7 +13,7 @@ class OrderController extends Controller
             ->with(['items.product'])
             ->latest()
             ->paginate(10);
-        
+
         return view('user.orders.index', compact('orders'));
     }
 
@@ -24,7 +24,7 @@ class OrderController extends Controller
         }
 
         return view('user.orders.show', [
-            'order' => $order->load(['items.product', 'user', 'order'])
+            'order' => $order->load(['items.product', 'user'])
         ]);
     }
-} 
+}

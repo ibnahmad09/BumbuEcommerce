@@ -26,7 +26,7 @@ class CheckoutController extends Controller
         ]);
 
         $carts = Cart::where('user_id', auth()->id())->with('product')->get();
-        
+
         if ($carts->isEmpty()) {
             return redirect()->back()->with('error', 'Keranjang belanja kosong');
         }
@@ -87,6 +87,6 @@ class CheckoutController extends Controller
         $snapToken = Snap::getSnapToken($params);
         $order->update(['midtrans_order_id' => $order->id, 'midtrans_snap_token' => $snapToken]);
 
-        return view('payment', ['snapToken' => $snapToken, 'order' => $order]);
+        return view('user.payment.payment', ['snapToken' => $snapToken, 'order' => $order]);
     }
 }
