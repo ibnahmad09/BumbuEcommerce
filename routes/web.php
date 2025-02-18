@@ -19,6 +19,7 @@ use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\ReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,6 +45,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('/order', AdminOrderController::class)->except(['create', 'store', 'edit']);
     Route::post('/order/{order}/update-status', [AdminOrderController::class, 'updateStatus'])->name('order.updateStatus');
     Route::resource('/users', UserController::class)->except('show');
+    Route::get('/report', [ReportController::class, 'index'])->name('admin.reports.index');
+    Route::post('/report/generate', [ReportController::class, 'generate'])->name('admin.reports.generate');
 });
 
 
