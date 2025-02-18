@@ -57,6 +57,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show']);
     Route::resource('reviews', ReviewController::class)->only(['store', 'update','index']);
     Route::get('/products', [UserProductController::class, 'index'])->name('user.products.index');
+    Route::get('/products/{product}', [UserProductController::class, 'show'])->name('user.products.show');
     Route::post('/chatbot', [ChatbotController::class, 'handle'])->name('chatbot.handle');
     Route::get('/about', [AboutController::class, 'index'])->name('about');
 

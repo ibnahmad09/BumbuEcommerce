@@ -67,26 +67,8 @@
         </div>
     </div>
 
-    <!-- Grafik dan Chart -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Grafik Pendapatan Bulanan -->
-        @if(isset($monthlyRevenue))
-        <div class="bg-white rounded-xl shadow-lg p-6">
-            <h2 class="text-xl font-semibold text-gray-800 mb-4">Pendapatan Bulanan</h2>
-            <canvas id="revenueChart" class="w-full h-64"></canvas>
-        </div>
-        @else
-        <p class="text-gray-600">Data pendapatan bulanan tidak tersedia</p>
-        @endif
-        <!-- Grafik Status Pesanan -->
-        <div class="bg-white rounded-xl shadow-lg p-6">
-            <h2 class="text-xl font-semibold text-gray-800 mb-4">Status Pesanan</h2>
-            <canvas id="orderStatusChart" class="w-full h-64"></canvas>
-        </div>
-    </div>
-
-    <!-- Pesanan Terbaru -->
-    <div class="bg-white rounded-xl shadow-lg p-6">
+      <!-- Pesanan Terbaru -->
+      <div class="bg-white rounded-xl shadow-lg p-6">
         <h2 class="text-xl font-semibold text-gray-800 mb-4">Pesanan Terbaru</h2>
         <div class="overflow-x-auto">
             <table class="min-w-full">
@@ -120,6 +102,26 @@
             </table>
         </div>
     </div>
+
+    <!-- Grafik dan Chart -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Grafik Pendapatan Bulanan -->
+        @if(isset($monthlyRevenue))
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Pendapatan Bulanan</h2>
+            <canvas id="revenueChart" class="w-full h-64"></canvas>
+        </div>
+        @else
+        <p class="text-gray-600">Data pendapatan bulanan tidak tersedia</p>
+        @endif
+        <!-- Grafik Status Pesanan -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Status Pesanan</h2>
+            <canvas id="orderStatusChart" class="w-full h-64"></canvas>
+        </div>
+    </div>
+
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

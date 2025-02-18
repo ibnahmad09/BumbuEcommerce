@@ -14,4 +14,9 @@ class UserProductController extends Controller
         $categories = Category::all();
         return view('user.products.index', compact('products', 'categories'));
     }
+
+    public function show(Product $product)
+{
+    return view('user.products.show', compact('product'));
+}
 }
